@@ -1,0 +1,11 @@
+Very Short Flow of the Code
+The program starts in main() and declares variables for name, age, blood group, and choice.
+A while loop keeps showing a menu with Add Donor, View Donors, Exit.
+If the user chooses Add Donor:
+The program takes name, age, and blood group.
+It checks if age ≥ 18 to see if the donor is eligible.
+The details are saved in a file called bloodbank.txt.
+If the user chooses View Donors:
+The program reads the file and prints all donor details.
+If the user chooses Exit:
+The loop breaks and the program ends.
