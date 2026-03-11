@@ -19,6 +19,9 @@ A simple <b>console-based Blood Bank program written in C</b> that stores donor 
 
 * 🧾 Add donor details
 * 🩺 Check donor eligibility (Age ≥ 18)
+* 📞 Store donor contact number
+* 📅 Track blood expiry date
+* 🩸 View total count per blood type
 * 💾 Save donor data to a file
 * 📋 View all stored donors
 * 🖥️ Simple menu-driven interface
@@ -32,7 +35,8 @@ A simple <b>console-based Blood Bank program written in C</b> that stores donor 
 
 1. Add Donor
 2. View Donors
-3. Exit
+3. View Total Blood Types
+4. Exit
 ```
 
 ---
@@ -56,13 +60,17 @@ The program asks the user to enter:
 * Name
 * Age
 * Blood Group
+* Contact Number
+* Blood Expiry Date
 
 Example input:
 
 ```text
 Enter Name: Rahul
 Enter Age: 20
-Enter Blood Group: O+
+Enter Blood Group (e.g. A+, O-): O+
+Enter Contact Number: 9876543210
+Enter Blood Expiry Date (DD/MM/YYYY): 15/06/2025
 ```
 
 Then the program checks:
@@ -82,9 +90,9 @@ bloodbank.txt
 Example stored data:
 
 ```text
-Rahul 20 O+
-Priya 22 A+
-Aman 19 B+
+Rahul 20 O+ 9876543210 15/06/2025
+Priya 22 A+ 9123456789 20/07/2025
+Aman 19 B+ 9000012345 10/08/2025
 ```
 
 ---
@@ -94,13 +102,33 @@ Aman 19 B+
 The program reads data from **bloodbank.txt** and displays it like this:
 
 ```text
-Name: Rahul | Age: 20 | Blood Group: O+
-Name: Priya | Age: 22 | Blood Group: A+
+Name: Rahul | Age: 20 | Blood Group: O+ | Contact: 9876543210 | Expiry: 15/06/2025
+Name: Priya | Age: 22 | Blood Group: A+ | Contact: 9123456789 | Expiry: 20/07/2025
 ```
 
 ---
 
-## 3️⃣ Exit
+## 3️⃣ View Total Blood Types
+
+The program reads all donors and counts how many of each blood type are available:
+
+```text
+--- Total Blood Types Available ---
+A+  : 2
+A-  : 0
+B+  : 1
+B-  : 1
+AB+ : 3
+AB- : 0
+O+  : 4
+O-  : 1
+```
+
+Uses `strcmp()` to match each donor's blood group to one of the 8 standard types.
+
+---
+
+## 4️⃣ Exit
 
 Stops the program using:
 
@@ -124,13 +152,14 @@ blood-bank-project-in-c-FYCO-A-1st-year-2nd-sem
 
 # 🧠 C Concepts Used
 
-| Concept       | Purpose                  |
-| ------------- | ------------------------ |
-| Variables     | Store donor data         |
-| Arrays        | Store text like names    |
-| Loops         | Menu system              |
-| Conditions    | Check donor eligibility  |
-| File Handling | Save and read donor data |
+| Concept       | Purpose                         |
+| ------------- | ------------------------------- |
+| Variables     | Store donor data                |
+| Arrays        | Store text like names           |
+| Loops         | Menu system                     |
+| Conditions    | Check donor eligibility         |
+| File Handling | Save and read donor data        |
+| `strcmp()`    | Compare blood group strings     |
 
 ---
 
@@ -185,7 +214,7 @@ File modes:
 Writes formatted data to a file.
 
 ```c
-fprintf(fp,"%s %d %s\n", name, age, blood);
+fprintf(fp, "%s %d %s %s %s\n", name, age, blood, contact, expiry);
 ```
 
 ---
@@ -195,8 +224,37 @@ fprintf(fp,"%s %d %s\n", name, age, blood);
 Reads formatted data from a file.
 
 ```c
-fscanf(fp,"%s %d %s", name, &age, blood);
+fscanf(fp, "%s %d %s %s %s", name, &age, blood, contact, expiry);
 ```
+
+---
+
+## `strcmp()`
+
+Compares two strings. Returns `0` if they are equal.
+
+```c
+if(strcmp(blood, "A+") == 0)
+    Apos++;
+```
+
+Used to count how many donors have each blood type.
+
+---
+
+## NULL Check
+
+Before reading a file, we check if it opened successfully:
+
+```c
+if(fp == NULL)
+{
+    printf("No donors found!\n");
+    continue;
+}
+```
+
+This prevents the program from **crashing** if the file doesn't exist yet.
 
 ---
 
@@ -224,6 +282,7 @@ This project was made to practice:
 * **Loops**
 * **Conditional statements**
 * **File handling**
+* **String comparison with `strcmp()`**
 * **Menu-driven programs**
 
 ---
