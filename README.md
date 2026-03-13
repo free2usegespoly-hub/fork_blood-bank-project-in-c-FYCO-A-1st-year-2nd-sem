@@ -6,11 +6,12 @@
 ![Level](https://img.shields.io/badge/Level-Beginner-green)
 ![Project](https://img.shields.io/badge/Project-College-orange)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![Header](https://img.shields.io/badge/Header-stdio.h%20only-lightgrey)
 
 </p>
 
 <p align="center">
-A simple <b>console-based Blood Bank program written in C</b> that stores donor information using file handling.
+A simple <b>console-based Blood Bank program written in C</b> that stores donor information using file handling. Uses only <code>#include &lt;stdio.h&gt;</code> — no extra libraries needed.
 </p>
 
 ---
@@ -124,7 +125,15 @@ O+  : 4
 O-  : 1
 ```
 
-Uses `strcmp()` to match each donor's blood group to one of the 8 standard types.
+Uses **character indexing** to match each donor's blood group — no extra library needed:
+
+```c
+if(blood[0]=='A' && blood[1]=='+' && blood[2]=='\0') Apos++;
+```
+
+- `blood[0]` → first character (e.g. `A`, `B`, `O`)
+- `blood[1]` → second character (e.g. `+`, `-`, `B`)
+- `blood[2]=='\0'` → checks the string ends there (so `A+` doesn't accidentally match `AB+`)
 
 ---
 
@@ -152,14 +161,14 @@ blood-bank-project-in-c-FYCO-A-1st-year-2nd-sem
 
 # 🧠 C Concepts Used
 
-| Concept       | Purpose                         |
-| ------------- | ------------------------------- |
-| Variables     | Store donor data                |
-| Arrays        | Store text like names           |
-| Loops         | Menu system                     |
-| Conditions    | Check donor eligibility         |
-| File Handling | Save and read donor data        |
-| `strcmp()`    | Compare blood group strings     |
+| Concept            | Purpose                              |
+| ------------------ | ------------------------------------ |
+| Variables          | Store donor data                     |
+| Arrays             | Store text like names                |
+| Loops              | Menu system                          |
+| Conditions         | Check donor eligibility              |
+| File Handling      | Save and read donor data             |
+| Character Indexing | Compare blood group character by character |
 
 ---
 
@@ -229,16 +238,16 @@ fscanf(fp, "%s %d %s %s %s", name, &age, blood, contact, expiry);
 
 ---
 
-## `strcmp()`
+## Character Indexing
 
-Compares two strings. Returns `0` if they are equal.
+Since we only use `stdio.h`, instead of `strcmp()` we check blood groups **character by character**:
 
 ```c
-if(strcmp(blood, "A+") == 0)
+if(blood[0]=='A' && blood[1]=='+' && blood[2]=='\0')
     Apos++;
 ```
 
-Used to count how many donors have each blood type.
+Arrays in C work like this — each character is stored at a position starting from `0`. The special character `'\0'` marks the **end of the string**.
 
 ---
 
@@ -282,7 +291,7 @@ This project was made to practice:
 * **Loops**
 * **Conditional statements**
 * **File handling**
-* **String comparison with `strcmp()`**
+* **Character indexing** (instead of string.h)
 * **Menu-driven programs**
 
 ---
